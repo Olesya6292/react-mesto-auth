@@ -1,0 +1,20 @@
+.page__button {
+  margin-top: 216px;
+  min-height: 50px;
+  font-size: 18px;
+  line-height: 1.22;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.8s linear;
+}
+
+.page__button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 424px) {
+  .page__button {
+    font-size: 16px;
+    line-height: 1.1;
+  }
+}

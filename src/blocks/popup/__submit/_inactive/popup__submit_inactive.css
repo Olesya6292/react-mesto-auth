@@ -1,0 +1,14 @@
+.popup__submit_inactive {
+    border: 1px solid #000;
+    color: #000;
+    background-color: #fff;
+    opacity: 0.2;
+    margin-top: 31px;
+    cursor: default;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__submit_inactive {
+        margin-top: 28px;
+    }
+}

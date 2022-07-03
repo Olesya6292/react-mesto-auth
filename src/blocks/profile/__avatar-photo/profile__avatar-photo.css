@@ -1,0 +1,9 @@
+.profile__avatar-photo {
+    box-sizing: border-box;
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    overflow: hidden;
+    object-fit: cover;
+    display: block;
+}

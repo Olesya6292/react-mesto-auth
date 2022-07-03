@@ -1,0 +1,12 @@
+.page__form{
+    display: flex;
+    flex-direction: column;
+    max-width: 358px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 424px) {
+    .page__form {
+        max-width: 279px;
+    }
+  }

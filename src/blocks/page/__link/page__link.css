@@ -1,0 +1,13 @@
+.page__link{
+    font-size: 14px;
+    line-height: 1.21;
+    cursor: pointer;
+    text-decoration: none;
+    color: #FFFFFF;
+    opacity: 1;
+    transition: opacity 0.8s linear;
+}
+
+.page__link:hover {
+    opacity: 0.6;
+  }

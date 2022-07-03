@@ -1,0 +1,9 @@
+.popup__submit_type_delete {
+    margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__submit_type_delete {
+        margin: 0;
+    }
+}

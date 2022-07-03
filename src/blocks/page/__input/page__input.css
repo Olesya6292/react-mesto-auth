@@ -1,0 +1,10 @@
+.page__input {
+    border: none;
+    border-bottom: 2px solid #CCCCCC;
+    font-weight: inherit;
+    background-color: inherit;
+    font-size: 14px;
+    line-height: 1.21;
+    color: #fff;
+    padding: 0 0 13px 0;
+}

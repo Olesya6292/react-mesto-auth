@@ -1,0 +1,28 @@
+.popup__close {
+    background: url(../../../images/close-icon.svg) center / cover no-repeat;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    border: none;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.8s linear;
+}
+
+.popup__close:hover {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__close {
+        width: 20px;
+        height: 20px;
+        right: 0;
+        top: -35px;
+    }
+}
