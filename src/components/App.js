@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -20,39 +20,43 @@ import positiv from "../images/positiv_result.svg";
 import "../index.css";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
-  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] =
-    React.useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
-  const [deleteCard, setDeleteCard] = React.useState({});
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [image, setImage] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [email, setEmail] = React.useState("");
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [deleteCard, setDeleteCard] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [email, setEmail] = useState("");
+  const [infoTooltipStatus, setInfoTooltipStatus] = useState({
+    image: "",
+    title: ""
+  });
 
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    api.getUserInfo().then((res) => {
-      setCurrentUser(res);
-    });
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  useEffect(() => {
+    if (loggedIn) {
+      api
+        .getUserInfo()
+        .then((res) => {
+          setCurrentUser(res);
+        })
+        .catch((err) => console.log(err));
+      api
+        .getInitialCards()
+        .then((res) => {
+          setCards(res);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       auth
@@ -188,13 +192,17 @@ function App() {
     auth
       .register(email, password)
       .then(() => {
-        setTitle("Вы успешно зарегистрировались!");
-        setImage(positiv);
+        setInfoTooltipStatus({
+          image: positiv,
+          title: "Вы успешно зарегистрировались!",
+        });
         navigate("/sign-in");
       })
       .catch((err) => {
-        setTitle("Что-то пошло не так! Попробуйте ещё раз.");
-        setImage(negativ);
+        setInfoTooltipStatus({
+          image: negativ,
+          title: "Что-то пошло не так! Попробуйте ещё раз.",
+        });
         console.log(err);
       })
       .finally(handleInfoTooltip);
@@ -211,8 +219,10 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setTitle("Что-то пошло не так! Попробуйте ещё раз.");
-        setImage(negativ);
+        setInfoTooltipStatus({
+          image: negativ,
+          title: "Что-то пошло не так! Попробуйте ещё раз.",
+        });
         handleInfoTooltip();
       });
   }
@@ -238,6 +248,7 @@ function App() {
             element={<Register onRegister={handleRegister} />}
           ></Route>
           <Route
+            exact
             path="/"
             element={
               <ProtectedRoute
@@ -293,8 +304,8 @@ function App() {
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
         <InfoTooltip
-          image={image}
-          title={title}
+          image={infoTooltipStatus.image}
+          title={infoTooltipStatus.title}
           onClose={closeAllPopups}
           isOpen={isInfoTooltipOpen}
         />
